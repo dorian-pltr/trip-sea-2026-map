@@ -354,10 +354,9 @@ routes.forEach(route=>{
     L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
     midPoint=curve[Math.floor(curve.length/2)];
   } else if(isReturn){
-    // Return routes: thin dashed, offset slightly
-    const midLat=(from[0]+to[0])/2+0.15,midLng=(from[1]+to[1])/2+0.15;
-    L.polyline([from,[midLat,midLng],to],{color:color,weight:1.5,opacity:0.3,dashArray:'4 6',lineCap:'round'}).addTo(map);
-    midPoint=[midLat,midLng];
+    // Return routes: same style as outbound, no line drawn (same road back, already shown)
+    midPoint=[(from[0]+to[0])/2,(from[1]+to[1])/2];
+    // Skip drawing — the outbound line already covers this route
   } else {
     L.polyline([from,to],{color:colorL,weight:6,opacity:0.12,lineCap:'round'}).addTo(map);
     L.polyline([from,to],{color:color,weight:3,opacity:0.8,lineCap:'round'}).addTo(map);
