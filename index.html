@@ -47,9 +47,8 @@
   .leg-line { width: 18px; height: 3px; border-radius: 2px; flex-shrink: 0; }
   .leg-dash { width: 18px; height: 0; border-top: 2px dashed rgba(255,255,255,0.4); flex-shrink: 0; }
 
-  /* Sidebar */
   .sidebar {
-    position: absolute; top: 0; left: 0; bottom: 0; width: 360px; z-index: 1001;
+    position: absolute; top: 0; left: 0; bottom: 0; width: 380px; z-index: 1001;
     background: linear-gradient(180deg, rgba(10,10,30,0.97), rgba(15,15,40,0.97));
     backdrop-filter: blur(16px); overflow-y: auto; transform: translateX(-100%);
     transition: transform 0.3s ease; border-right: 1px solid rgba(255,255,255,0.06);
@@ -61,39 +60,42 @@
     background: rgba(10,10,30,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); z-index: 1;
   }
   .sidebar-header h2 { font-size: 15px; color: #fff; font-weight: 700; }
-  .sidebar-close { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 22px; cursor: pointer; padding: 4px; }
+  .sidebar-close { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 22px; cursor: pointer; }
   .sidebar-close:hover { color: #fff; }
 
   .stop-item {
-    padding: 12px 20px; display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 20px; display: flex; align-items: flex-start; gap: 12px;
     cursor: pointer; transition: background 0.15s;
   }
   .stop-item:hover { background: rgba(255,255,255,0.04); }
   .stop-item.active { background: rgba(255,255,255,0.08); }
+  .stop-item.excursion { opacity: 0.75; }
   .stop-num {
     width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
     font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0; margin-top: 2px;
     box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
   }
+  .stop-num.exc { width: 22px; height: 22px; font-size: 10px; border: 2px dashed rgba(255,255,255,0.3); box-shadow: none; }
   .stop-details { flex: 1; min-width: 0; }
   .stop-name { font-size: 13px; font-weight: 600; color: #fff; }
   .stop-meta { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+  .stop-note { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; font-style: italic; }
 
-  /* Transport row between stops in sidebar */
   .transport-row {
-    display: flex; align-items: center; gap: 8px;
-    padding: 6px 20px 6px 30px; position: relative;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    padding: 5px 20px 5px 30px; position: relative;
     border-left: 2px dashed rgba(255,255,255,0.08); margin-left: 33px;
   }
-  .transport-row .t-badge {
+  .t-badge {
     display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 500;
+    padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 500;
     background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.55);
     border: 1px solid rgba(255,255,255,0.06);
   }
-  .transport-row .t-badge .t-icon { font-size: 12px; }
-  .transport-row .t-badge .t-time { color: rgba(255,255,255,0.8); font-weight: 700; }
-  .transport-row .t-badge .t-cost { color: rgba(255,255,255,0.35); }
+  .t-badge .t-icon { font-size: 11px; }
+  .t-badge .t-time { color: rgba(255,255,255,0.8); font-weight: 700; }
+  .t-badge .t-cost { color: rgba(255,255,255,0.35); }
+  .t-badge.return { border-style: dashed; opacity: 0.7; }
 
   .country-divider {
     padding: 8px 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px;
@@ -111,7 +113,6 @@
   .sidebar-toggle:hover { background: rgba(30,30,60,0.95); }
   .sidebar.open ~ .sidebar-toggle { opacity: 0; pointer-events: none; }
 
-  /* Route label on map */
   .route-label {
     padding: 2px 7px; border-radius: 6px; font-size: 9px; font-weight: 600;
     white-space: nowrap; color: rgba(255,255,255,0.75);
@@ -121,7 +122,6 @@
   }
   .route-label .rl-time { color: #fff; font-weight: 800; }
 
-  /* Markers */
   .marker-pin {
     width: 30px; height: 30px; border-radius: 50%; display: flex;
     align-items: center; justify-content: center; font-size: 12px;
@@ -130,6 +130,7 @@
   }
   .marker-pin.small { width: 24px; height: 24px; font-size: 10px; }
   .marker-pin.large { width: 36px; height: 36px; font-size: 14px; }
+  .marker-pin.excursion { width: 22px; height: 22px; font-size: 9px; border: 2px dashed rgba(255,255,255,0.4); box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
   .marker-pin.vietnam { background: linear-gradient(135deg, #e74c3c, #c0392b); }
   .marker-pin.thailand { background: linear-gradient(135deg, #f39c12, #e67e22); }
   .marker-pin.malaysia { background: linear-gradient(135deg, #3498db, #2980b9); }
@@ -141,7 +142,6 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.3); pointer-events: none;
   }
 
-  /* Popup */
   .custom-popup .leaflet-popup-content-wrapper {
     background: linear-gradient(135deg, rgba(10,10,30,0.96), rgba(20,20,50,0.94)) !important;
     color: #fff !important; border-radius: 12px !important; padding: 0 !important;
@@ -156,7 +156,7 @@
   .pop-dates { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
   .pop-highlights { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08); }
   .pop-food { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 4px; }
-
+  .pop-note { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 4px; font-style: italic; }
   .leaflet-control-attribution { display: none !important; }
 
   @media (max-width: 600px) {
@@ -165,7 +165,6 @@
     .stats-box { display: none; }
     .sidebar { width: 300px; }
     .legend-box { gap: 10px; padding: 6px 14px; }
-    .leg { font-size: 10px; }
   }
 </style>
 </head>
@@ -197,177 +196,220 @@
   <div class="leg"><span class="leg-dot" style="background:linear-gradient(135deg,#3498db,#2980b9);"></span> 🇲🇾 Malaysia · 20d</div>
   <div class="leg"><span class="leg-line" style="background:linear-gradient(90deg,#e74c3c,#f39c12);"></span> Ground</div>
   <div class="leg"><span class="leg-dash"></span> ✈️ Flight</div>
+  <div class="leg"><span style="width:14px;height:14px;border:2px dashed rgba(255,255,255,0.4);border-radius:50%;display:inline-block;"></span> Excursion</div>
 </div>
 
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// Stops = destinations only (no transport)
+// Stops: excursion = round-trip from base city, baseIdx = which stop they return to
 const stops = [
-  { name:"Hanoi", emoji:"🏙️", lat:21.0285, lng:105.8542, country:"vietnam", flag:"🇻🇳", days:"D1–D4", dates:"Oct 15–18", dur:"4 days", dnum:4, highlights:"Old Quarter, Temple of Literature, Street Food Motorbike Tour", food:"Pho Thin, Bun Cha, Egg Coffee" },
-  { name:"Ha Long Bay", emoji:"🌊", lat:20.91, lng:107.18, country:"vietnam", flag:"🇻🇳", days:"D5–D6", dates:"Oct 19–20", dur:"2 days", dnum:2, highlights:"2D/1N cruise, kayaking, caves" },
-  { name:"Ninh Binh", emoji:"🏞️", lat:20.25, lng:105.97, country:"vietnam", flag:"🇻🇳", days:"D7–D8", dates:"Oct 21–22", dur:"2 days", dnum:2, highlights:"Tam Coc boat ride, Mua Cave" },
-  { name:"Hoi An & Hue", emoji:"🏮", lat:15.88, lng:108.34, country:"vietnam", flag:"🇻🇳", days:"D10–D15", dates:"Oct 24–29", dur:"6 days", dnum:6, highlights:"Ancient town, lanterns, Imperial City", food:"Cao Lau, Banh Mi, Bun Bo Hue" },
-  { name:"Ho Chi Minh City", emoji:"🌆", lat:10.82, lng:106.63, country:"vietnam", flag:"🇻🇳", days:"D16–D20", dates:"Oct 30 – Nov 3", dur:"5 days", dnum:5, highlights:"Cu Chi Tunnels, Ben Thanh Market", food:"Banh Mi, Com Tam, Pho" },
-  { name:"Can Tho", emoji:"🚣", lat:10.05, lng:105.75, country:"vietnam", flag:"🇻🇳", days:"D21–D22", dates:"Nov 4–5", dur:"2 days", dnum:2, highlights:"Cai Rang floating market" },
-  { name:"Bangkok", emoji:"🏙️", lat:13.76, lng:100.50, country:"thailand", flag:"🇹🇭", days:"D23–D26", dates:"Nov 6–9", dur:"4 days", dnum:4, highlights:"Grand Palace, Chinatown, Chatuchak", food:"Pad Thai, Som Tam, Mango Sticky Rice" },
-  { name:"Chiang Mai", emoji:"⛰️", lat:18.79, lng:98.99, country:"thailand", flag:"🇹🇭", days:"D28–D33", dates:"Nov 11–16", dur:"6 days", dnum:6, highlights:"Elephant Nature Park, temples, cooking class" },
-  { name:"Koh Lanta", emoji:"🏖️", lat:7.65, lng:99.04, country:"thailand", flag:"🇹🇭", days:"D35–D40", dates:"Nov 18–23", dur:"6 days", dnum:6, highlights:"Beaches, Old Town, sunset spots" },
-  { name:"Langkawi", emoji:"🏝️", lat:6.35, lng:99.80, country:"malaysia", flag:"🇲🇾", days:"D43–D46", dates:"Nov 26–29", dur:"4 days", dnum:4, highlights:"Sky Bridge, beaches, mangroves" },
-  { name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D50", dates:"Nov 30 – Dec 3", dur:"4 days", dnum:4, highlights:"George Town street art, temples", food:"Char Kway Teow, Laksa, Cendol" },
-  { name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D51–D52", dates:"Dec 4–5", dur:"2 days", dnum:2, highlights:"Tea plantations, Mossy Forest" },
-  { name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D53–D56", dates:"Dec 6–9", dur:"4 days", dnum:4, highlights:"Petronas, Batu Caves, Jalan Alor", food:"Nasi Lemak, Roti Canai, Satay" },
-  { name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D57–D58", dates:"Dec 10–11", dur:"2 days", dnum:2, highlights:"Jonker Street, colonial history" },
-  { name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D59–D62", dates:"Dec 12–15", dur:"4 days", dnum:4, highlights:"Rest, shopping, farewell meals" },
+  { id:0, name:"Hanoi", emoji:"🏙️", lat:21.0285, lng:105.8542, country:"vietnam", flag:"🇻🇳", days:"D1–D4", dates:"Oct 15–18", dur:"4 days", dnum:4, note:"Base for 8 days (D1–D9). Hotel holds luggage.", highlights:"Old Quarter, Temple of Literature, Street Food Tour, Long Bien Bridge", food:"Pho Thin, Bun Cha, Egg Coffee" },
+  { id:1, name:"Ha Long Bay", emoji:"🌊", lat:20.91, lng:107.18, country:"vietnam", flag:"🇻🇳", days:"D5–D6", dates:"Oct 19–20", dur:"2 days", dnum:2, excursion:true, baseIdx:0, note:"Round trip from Hanoi. Luggage stays at hotel.", highlights:"2D/1N cruise, kayaking, caves" },
+  { id:2, name:"Ninh Binh", emoji:"🏞️", lat:20.25, lng:105.97, country:"vietnam", flag:"🇻🇳", days:"D7–D8", dates:"Oct 21–22", dur:"2 days", dnum:2, excursion:true, baseIdx:0, note:"Round trip from Hanoi. 1 night in Tam Coc.", highlights:"Tam Coc boat ride, Mua Cave" },
+  { id:3, name:"Hoi An & Hue", emoji:"🏮", lat:15.88, lng:108.34, country:"vietnam", flag:"🇻🇳", days:"D10–D15", dates:"Oct 24–29", dur:"6 days", dnum:6, highlights:"Ancient town, lanterns, Imperial City of Hue", food:"Cao Lau, Banh Mi, Bun Bo Hue" },
+  { id:4, name:"Ho Chi Minh City", emoji:"🌆", lat:10.82, lng:106.63, country:"vietnam", flag:"🇻🇳", days:"D16–D20", dates:"Oct 30 – Nov 3", dur:"5 days", dnum:5, highlights:"Cu Chi Tunnels, Ben Thanh Market, Saigon street food", food:"Banh Mi, Com Tam, Pho" },
+  { id:5, name:"Can Tho", emoji:"🚣", lat:10.05, lng:105.75, country:"vietnam", flag:"🇻🇳", days:"D21–D22", dates:"Nov 4–5", dur:"2 days", dnum:2, excursion:true, baseIdx:4, note:"Round trip from HCMC.", highlights:"Cai Rang floating market" },
+  { id:6, name:"Bangkok", emoji:"🏙️", lat:13.76, lng:100.50, country:"thailand", flag:"🇹🇭", days:"D23–D26", dates:"Nov 6–9", dur:"4 days", dnum:4, highlights:"Grand Palace, Chinatown, Chatuchak, Muay Thai", food:"Pad Thai, Som Tam, Mango Sticky Rice" },
+  { id:7, name:"Chiang Mai", emoji:"⛰️", lat:18.79, lng:98.99, country:"thailand", flag:"🇹🇭", days:"D28–D33", dates:"Nov 11–16", dur:"6 days", dnum:6, highlights:"Elephant Nature Park, temples, cooking class, markets" },
+  { id:8, name:"Koh Lanta", emoji:"🏖️", lat:7.65, lng:99.04, country:"thailand", flag:"🇹🇭", days:"D35–D40", dates:"Nov 18–23", dur:"6 days", dnum:6, highlights:"Beaches, Old Town, snorkeling, pure relaxation" },
+  { id:9, name:"Langkawi", emoji:"🏝️", lat:6.35, lng:99.80, country:"malaysia", flag:"🇲🇾", days:"D43–D46", dates:"Nov 26–29", dur:"4 days", dnum:4, highlights:"Sky Bridge, beaches, mangroves, duty-free" },
+  { id:10, name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D50", dates:"Nov 30 – Dec 3", dur:"4 days", dnum:4, highlights:"George Town street art, temples, food capital", food:"Char Kway Teow, Laksa, Cendol" },
+  { id:11, name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D51–D52", dates:"Dec 4–5", dur:"2 days", dnum:2, highlights:"Tea plantations, Mossy Forest, strawberry farms" },
+  { id:12, name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D53–D56", dates:"Dec 6–9", dur:"4 days", dnum:4, highlights:"Petronas, Batu Caves, Jalan Alor food street", food:"Nasi Lemak, Roti Canai, Satay" },
+  { id:13, name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D57–D58", dates:"Dec 10–11", dur:"2 days", dnum:2, excursion:true, baseIdx:12, note:"Round trip from KL. 1 night.", highlights:"Jonker Street, colonial history, river cruise" },
+  { id:14, name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D59–D62", dates:"Dec 12–15", dur:"4 days", dnum:4, highlights:"Rest, shopping, farewell meals" },
 ];
 
-// Routes = transport segments between stops
+// Routes: actual transport between stops (reflecting real flow)
+// Excursions show outbound + return, main routes show the onward journey
 const routes = [
-  { from:0, to:1, segments:[{ icon:"🚐", mode:"Shuttle", time:"3h", cost:"included" }], flight:false },
-  { from:1, to:2, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false },
-  { from:2, to:3, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"" }, { icon:"✈️", mode:"Flight", time:"1h15", cost:"40–60€/pp" }, { icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:true },
+  // Hanoi → Ha Long (excursion out)
+  { from:0, to:1, segments:[{ icon:"🚐", mode:"Cruise shuttle", time:"3h", cost:"included" }], flight:false, excursionOut:true },
+  // Ha Long → Hanoi (excursion return)
+  { from:1, to:0, segments:[{ icon:"🚐", mode:"Return shuttle", time:"3h", cost:"included" }], flight:false, excursionReturn:true, label:"Return to Hanoi" },
+  // Hanoi → Ninh Binh (excursion out)
+  { from:0, to:2, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false, excursionOut:true },
+  // Ninh Binh → Hanoi (excursion return)
+  { from:2, to:0, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false, excursionReturn:true, label:"Return to Hanoi" },
+  // Hanoi → Hoi An (transit day D9)
+  { from:0, to:3, segments:[{ icon:"✈️", mode:"Flight", time:"1h15", cost:"40–60€/pp" }, { icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:true, label:"D9 Transit" },
+  // Hoi An → HCMC
   { from:3, to:4, segments:[{ icon:"✈️", mode:"Flight", time:"2h", cost:"50€/pp" }], flight:true },
-  { from:4, to:5, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false },
-  { from:5, to:6, segments:[{ icon:"✈️", mode:"Flight", time:"1h30", cost:"60€/pp" }], flight:true },
+  // HCMC → Can Tho (excursion out)
+  { from:4, to:5, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionOut:true },
+  // Can Tho → HCMC (excursion return)
+  { from:5, to:4, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionReturn:true, label:"Return to HCMC" },
+  // HCMC → Bangkok
+  { from:4, to:6, segments:[{ icon:"✈️", mode:"Flight", time:"1h30", cost:"60€/pp" }], flight:true },
+  // Bangkok → Chiang Mai
   { from:6, to:7, segments:[{ icon:"🚂", mode:"Night train", time:"12–14h", cost:"30€/pp" }], flight:false },
+  // Chiang Mai → Koh Lanta
   { from:7, to:8, segments:[{ icon:"✈️", mode:"Flight", time:"2h", cost:"~70€/pp" }, { icon:"🚢", mode:"Ferry", time:"1h30", cost:"~15€/pp" }], flight:true },
-  { from:8, to:9, segments:[{ icon:"🚢", mode:"Ferry", time:"5h30–6h30", cost:"~85€/pp" }], flight:false },
+  // Koh Lanta → Langkawi
+  { from:8, to:9, segments:[{ icon:"🚢", mode:"Ferry via Koh Lipe", time:"5h30–6h30", cost:"~85€/pp" }], flight:false },
+  // Langkawi → Penang
   { from:9, to:10, segments:[{ icon:"🚢", mode:"Ferry", time:"2h45", cost:"15€/pp" }], flight:false },
+  // Penang → Cameron Highlands
   { from:10, to:11, segments:[{ icon:"🚌", mode:"Bus", time:"4–5h", cost:"10–15€/pp" }], flight:false },
+  // Cameron → KL
   { from:11, to:12, segments:[{ icon:"🚌", mode:"Bus", time:"4h", cost:"10–15€/pp" }], flight:false },
-  { from:12, to:13, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"10€/pp" }], flight:false },
-  { from:13, to:14, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"~10€/pp" }], flight:false },
+  // KL → Melaka (excursion out)
+  { from:12, to:13, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"10€/pp" }], flight:false, excursionOut:true },
+  // Melaka → KL (excursion return)
+  { from:13, to:12, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"~10€/pp" }], flight:false, excursionReturn:true, label:"Return to KL" },
 ];
 
 const colors = { vietnam:'#e74c3c', thailand:'#f39c12', malaysia:'#3498db' };
 const colorsLight = { vietnam:'#ff6b6b', thailand:'#ffd93d', malaysia:'#6bcfff' };
 const countryNames = { vietnam:'🇻🇳 Vietnam', thailand:'🇹🇭 Thailand', malaysia:'🇲🇾 Malaysia' };
 
-// Sidebar: stops with transport rows in between
+// Sidebar
 function buildSidebar() {
   let html = '', lastCountry = '';
-  stops.forEach((s, i) => {
-    if (i === stops.length - 1) return; // skip duplicate KL
+  // Ordered display (skip duplicate KL departure in sidebar, show inline)
+  const displayOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+
+  displayOrder.forEach(idx => {
+    const s = stops[idx];
+    if (idx === 14) return; // departure shown as note on KL
+
     if (s.country !== lastCountry) {
       html += `<div class="country-divider" style="color:${colors[s.country]};">${countryNames[s.country]}</div>`;
       lastCountry = s.country;
     }
-    // Stop
-    html += `<div class="stop-item" data-idx="${i}" onclick="flyTo(${i})">
-      <div class="stop-num" style="background:linear-gradient(135deg,${colors[s.country]},${colors[s.country]}cc);">${i+1}</div>
+
+    const isExc = s.excursion;
+    html += `<div class="stop-item ${isExc?'excursion':''}" data-idx="${idx}" onclick="flyTo(${idx})">
+      <div class="stop-num ${isExc?'exc':''}" style="background:linear-gradient(135deg,${colors[s.country]},${colors[s.country]}cc);">${idx+1}</div>
       <div class="stop-details">
-        <div class="stop-name">${s.emoji} ${s.name}</div>
+        <div class="stop-name">${s.emoji} ${s.name} ${isExc?'<span style="font-size:9px;opacity:0.5;">↩ excursion</span>':''}</div>
         <div class="stop-meta">${s.dates} · ${s.dur} (${s.days})</div>
+        ${s.note?`<div class="stop-note">${s.note}</div>`:''}
       </div>
     </div>`;
-    // Transport row after this stop (if route exists)
-    const route = routes.find(r => r.from === i);
-    if (route) {
+
+    // Transport rows after this stop
+    const outRoutes = routes.filter(r => r.from === idx && !r.excursionReturn);
+    const retRoutes = routes.filter(r => r.from === idx && r.excursionReturn);
+
+    if (outRoutes.length || retRoutes.length) {
       html += `<div class="transport-row">`;
-      route.segments.forEach(seg => {
-        html += `<div class="t-badge">
-          <span class="t-icon">${seg.icon}</span>
-          <span>${seg.mode}</span>
-          <span class="t-time">${seg.time}</span>
-          ${seg.cost ? `<span class="t-cost">· ${seg.cost}</span>` : ''}
-        </div>`;
+      outRoutes.forEach(route => {
+        route.segments.forEach(seg => {
+          html += `<div class="t-badge"><span class="t-icon">${seg.icon}</span> ${seg.mode} <span class="t-time">${seg.time}</span> <span class="t-cost">· ${seg.cost}</span></div>`;
+        });
+      });
+      retRoutes.forEach(route => {
+        route.segments.forEach(seg => {
+          html += `<div class="t-badge return"><span class="t-icon">↩</span> ${seg.mode} <span class="t-time">${seg.time}</span> <span class="t-cost">· ${seg.cost}</span></div>`;
+        });
       });
       html += `</div>`;
     }
   });
+
+  // Departure note
+  html += `<div class="transport-row"><div class="t-badge"><span class="t-icon">✈️</span> Int'l flight home <span class="t-cost">· ~450€/pp</span></div></div>`;
+
   document.getElementById('sidebar-content').innerHTML = html;
 }
 
 function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-
 function flyTo(idx) {
   const s = stops[idx];
-  map.flyTo([s.lat, s.lng], 8, { duration: 1.2 });
-  if (markersArr[idx]) markersArr[idx].openPopup();
-  document.querySelectorAll('.stop-item').forEach(el => el.classList.remove('active'));
-  const el = document.querySelector(`.stop-item[data-idx="${idx}"]`);
-  if (el) { el.classList.add('active'); el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  map.flyTo([s.lat,s.lng], 8, {duration:1.2});
+  if(markersArr[idx]) markersArr[idx].openPopup();
+  document.querySelectorAll('.stop-item').forEach(el=>el.classList.remove('active'));
+  const el=document.querySelector(`.stop-item[data-idx="${idx}"]`);
+  if(el){el.classList.add('active');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
 }
 
 // Map
-const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([11.5, 103], 5);
-L.control.zoom({ position: 'bottomright' }).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { subdomains:'abcd', maxZoom:19 }).addTo(map);
+const map = L.map('map',{zoomControl:false,attributionControl:false}).setView([11.5,103],5);
+L.control.zoom({position:'bottomright'}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19}).addTo(map);
 
-function bezierCurve(from, to, n=40) {
+function bezierCurve(from,to,n=40){
   const dist=Math.sqrt(Math.pow(to[0]-from[0],2)+Math.pow(to[1]-from[1],2));
-  const offset=dist*0.35;
-  const dx=to[1]-from[1],dy=to[0]-from[0],len=Math.sqrt(dx*dx+dy*dy)||1;
-  const cpLat=(from[0]+to[0])/2+(dx/len)*offset, cpLng=(from[1]+to[1])/2-(dy/len)*offset;
-  const pts=[];
-  for(let i=0;i<=n;i++){const t=i/n;pts.push([(1-t)*(1-t)*from[0]+2*(1-t)*t*cpLat+t*t*to[0],(1-t)*(1-t)*from[1]+2*(1-t)*t*cpLng+t*t*to[1]]);}
+  const offset=dist*0.35;const dx=to[1]-from[1],dy=to[0]-from[0],len=Math.sqrt(dx*dx+dy*dy)||1;
+  const cpLat=(from[0]+to[0])/2+(dx/len)*offset,cpLng=(from[1]+to[1])/2-(dy/len)*offset;
+  const pts=[];for(let i=0;i<=n;i++){const t=i/n;pts.push([(1-t)*(1-t)*from[0]+2*(1-t)*t*cpLat+t*t*to[0],(1-t)*(1-t)*from[1]+2*(1-t)*t*cpLng+t*t*to[1]]);}
   return pts;
 }
 
-// Draw routes with labels
-routes.forEach(route => {
-  const fromS=stops[route.from], toS=stops[route.to];
-  const from=[fromS.lat,fromS.lng], to=[toS.lat,toS.lng];
+// Draw routes
+routes.forEach(route=>{
+  const fromS=stops[route.from],toS=stops[route.to];
+  const from=[fromS.lat,fromS.lng],to=[toS.lat,toS.lng];
   const color=colors[toS.country]||colors[fromS.country];
   const colorL=colorsLight[toS.country]||colorsLight[fromS.country];
+  const isReturn=route.excursionReturn;
 
   let midPoint;
-
-  if (route.flight) {
+  if(route.flight){
     const curve=bezierCurve(from,to);
     L.polyline(curve,{color:colorL,weight:8,opacity:0.1,lineCap:'round'}).addTo(map);
     L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
-    midPoint = curve[Math.floor(curve.length/2)];
+    midPoint=curve[Math.floor(curve.length/2)];
+  } else if(isReturn){
+    // Return routes: thin dashed, offset slightly
+    const midLat=(from[0]+to[0])/2+0.15,midLng=(from[1]+to[1])/2+0.15;
+    L.polyline([from,[midLat,midLng],to],{color:color,weight:1.5,opacity:0.3,dashArray:'4 6',lineCap:'round'}).addTo(map);
+    midPoint=[midLat,midLng];
   } else {
     L.polyline([from,to],{color:colorL,weight:6,opacity:0.12,lineCap:'round'}).addTo(map);
     L.polyline([from,to],{color:color,weight:3,opacity:0.8,lineCap:'round'}).addTo(map);
-    midPoint = [(from[0]+to[0])/2, (from[1]+to[1])/2];
+    midPoint=[(from[0]+to[0])/2,(from[1]+to[1])/2];
   }
 
-  // Route label on the line
-  const mainSeg = route.segments[0];
-  const totalTime = route.segments.map(s=>s.time).join(' + ');
-  const labelHtml = `<div class="route-label">${mainSeg.icon} <span class="rl-time">${totalTime}</span></div>`;
-  const labelIcon = L.divIcon({ className:'', html:labelHtml, iconAnchor:[40,10] });
-  L.marker(midPoint, { icon:labelIcon, interactive:false }).addTo(map);
+  // Route label on the line (skip return routes to avoid clutter)
+  if(!isReturn){
+    const mainSeg=route.segments[0];
+    const totalTime=route.segments.map(s=>s.time).join(' + ');
+    const labelHtml=`<div class="route-label">${mainSeg.icon} <span class="rl-time">${totalTime}</span></div>`;
+    L.marker(midPoint,{icon:L.divIcon({className:'',html:labelHtml,iconAnchor:[40,10]}),interactive:false}).addTo(map);
+  }
 });
 
-// City markers
-const markersArr = [];
-const labelOffsets = {0:[-1,-18],1:[1,0],2:[-1,8],3:[1,-5],4:[-1,-5],5:[1,5],6:[-1,-8],7:[1,-5],8:[-1,0],9:[1,-8],10:[-1,0],11:[1,0],12:[-1,8],13:[1,0]};
+// Markers
+const markersArr=[];
+const labelOffsets={0:[-1,-20],1:[1,0],2:[-1,8],3:[1,-5],4:[-1,-5],5:[1,5],6:[-1,-8],7:[1,-5],8:[-1,0],9:[1,-8],10:[-1,0],11:[1,0],12:[-1,8],13:[1,0]};
 
-stops.forEach((s,i) => {
-  const sz = s.dnum>=5?'large':s.dnum<=2?'small':'';
-  const icon = L.divIcon({
-    className:'', html:`<div class="marker-pin ${sz} ${s.country}">${i+1}</div>`,
-    iconSize: sz==='large'?[36,36]:sz==='small'?[24,24]:[30,30],
-    iconAnchor: sz==='large'?[18,18]:sz==='small'?[12,12]:[15,15]
+stops.forEach((s,i)=>{
+  if(i===14) return; // skip departure duplicate
+  const isExc=s.excursion;
+  const sz=isExc?'excursion':s.dnum>=5?'large':s.dnum<=2?'small':'';
+  const icon=L.divIcon({
+    className:'',
+    html:`<div class="marker-pin ${sz} ${s.country}">${i+1}</div>`,
+    iconSize:isExc?[22,22]:sz==='large'?[36,36]:sz==='small'?[24,24]:[30,30],
+    iconAnchor:isExc?[11,11]:sz==='large'?[18,18]:sz==='small'?[12,12]:[15,15]
   });
 
-  const popupHtml = `
+  const popupHtml=`
     <div class="pop-title">${s.emoji} ${s.name}</div>
     <div class="pop-dates">${s.flag} ${s.dates} · ${s.dur} (${s.days})</div>
+    ${s.note?`<div class="pop-note">${s.note}</div>`:''}
     ${s.highlights?`<div class="pop-highlights">📍 ${s.highlights}</div>`:''}
     ${s.food?`<div class="pop-food">🍜 ${s.food}</div>`:''}
   `;
-
-  const marker = L.marker([s.lat,s.lng], {icon}).addTo(map);
-  marker.bindPopup(popupHtml, {className:'custom-popup', closeButton:true, maxWidth:280});
+  const marker=L.marker([s.lat,s.lng],{icon}).addTo(map);
+  marker.bindPopup(popupHtml,{className:'custom-popup',closeButton:true,maxWidth:280});
   markersArr.push(marker);
 
-  if (i < 14) {
-    const off = labelOffsets[i]||[1,0];
-    const isLeft = off[0]<0;
-    L.marker([s.lat,s.lng], {
-      icon: L.divIcon({className:'', html:`<div class="city-tag">${s.name}</div>`, iconAnchor:isLeft?[120,10-off[1]]:[-18,10-off[1]]}),
-      interactive:false
-    }).addTo(map);
-  }
+  // Label
+  const off=labelOffsets[i]||[1,0];
+  const isLeft=off[0]<0;
+  L.marker([s.lat,s.lng],{
+    icon:L.divIcon({className:'',html:`<div class="city-tag">${s.name}</div>`,iconAnchor:isLeft?[120,10-off[1]]:[-18,10-off[1]]}),
+    interactive:false
+  }).addTo(map);
 });
 
 buildSidebar();
-if (window.innerWidth > 768) toggleSidebar();
+if(window.innerWidth>768) toggleSidebar();
 </script>
 </body>
 </html>
