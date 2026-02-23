@@ -234,8 +234,8 @@ const routes = [
   { from:0, to:2, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false, excursionOut:true },
   // Ninh Binh → Hanoi (excursion return)
   { from:2, to:0, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false, excursionReturn:true, label:"Return to Hanoi" },
-  // Hanoi → Hoi An (transit day D9: night train confirmed)
-  { from:0, to:3, segments:[{ icon:"🚂", mode:"Night train S20", time:"14–16h", cost:"~25€/pp" }, { icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:false, label:"D9 Night train" },
+  // Hanoi → Hoi An (transit day D9: night train confirmed, Grab Da Nang→Hoi An is just transfer)
+  { from:0, to:3, segments:[{ icon:"🚂", mode:"Night train S20", time:"14–16h", cost:"~25€/pp" }], flight:false, label:"D9 Night train" },
   // Hoi An → Huế (minivan via Hai Van Pass)
   { from:3, to:4, segments:[{ icon:"🚐", mode:"Minivan Hai Van Pass", time:"3–4h", cost:"6–8€/pp" }], flight:false },
   // Huế → Da Nang (train, airport transfer)
@@ -250,11 +250,11 @@ const routes = [
   { from:5, to:7, segments:[{ icon:"✈️", mode:"Flight", time:"1h30", cost:"60€/pp" }], flight:true },
   // Bangkok → Chiang Mai
   { from:7, to:8, segments:[{ icon:"🚂", mode:"Night train", time:"12–14h", cost:"30€/pp" }], flight:false },
-  // Chiang Mai → Koh Lanta
-  { from:8, to:9, segments:[{ icon:"✈️", mode:"Flight", time:"2h", cost:"~70€/pp" }, { icon:"🚢", mode:"Ferry", time:"1h30", cost:"~15€/pp" }], flight:true },
-  // Koh Lanta → Langkawi
+  // Chiang Mai → Krabi (flight) then ferry to Koh Lanta
+  { from:8, to:9, segments:[{ icon:"✈️", mode:"Flight CNX→KBV", time:"2h", cost:"~70€/pp" }], flight:true },
+  // Koh Lanta → Langkawi (ferry via Koh Lipe, international crossing)
   { from:9, to:10, segments:[{ icon:"🚢", mode:"Ferry via Koh Lipe", time:"5h30–6h30", cost:"~85€/pp" }], flight:false },
-  // Langkawi → Penang
+  // Langkawi → Penang (ferry)
   { from:10, to:11, segments:[{ icon:"🚢", mode:"Ferry", time:"2h45", cost:"15€/pp" }], flight:false },
   // Penang → Cameron Highlands
   { from:11, to:12, segments:[{ icon:"🚌", mode:"Bus", time:"4–5h", cost:"10–15€/pp" }], flight:false },
