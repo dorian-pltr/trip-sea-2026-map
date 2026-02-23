@@ -114,11 +114,12 @@
   .sidebar.open ~ .sidebar-toggle { opacity: 0; pointer-events: none; }
 
   .route-label {
-    padding: 2px 7px; border-radius: 6px; font-size: 9px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600;
     white-space: nowrap; color: rgba(255,255,255,0.75);
-    background: rgba(10,10,30,0.85); border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4); pointer-events: none;
-    display: flex; align-items: center; gap: 3px;
+    background: rgba(10,10,30,0.9); border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5); pointer-events: none;
+    display: inline-flex; align-items: center; gap: 4px;
+    width: max-content;
   }
   .route-label .rl-time { color: #fff; font-weight: 800; }
 
@@ -374,7 +375,7 @@ routes.forEach(route=>{
     // Offset label position to avoid overlaps in dense areas
     const labelOff = route.labelOffset || [0,0];
     const adjPoint = [midPoint[0]+labelOff[0], midPoint[1]+labelOff[1]];
-    L.marker(adjPoint,{icon:L.divIcon({className:'',html:labelHtml,iconAnchor:[40,10]}),interactive:false}).addTo(map);
+    L.marker(adjPoint,{icon:L.divIcon({className:'',html:labelHtml,iconSize:[null,null],iconAnchor:[0,12]}),interactive:false}).addTo(map);
   }
 });
 
