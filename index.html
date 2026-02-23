@@ -173,7 +173,7 @@
 <div class="stats-box">
   <div class="stat"><div class="stat-num">62</div><div class="stat-label">Days</div></div>
   <div class="stat"><div class="stat-num">3</div><div class="stat-label">Countries</div></div>
-  <div class="stat"><div class="stat-num">17</div><div class="stat-label">Stops</div></div>
+  <div class="stat"><div class="stat-num">18</div><div class="stat-label">Stops</div></div>
 </div>
 
 <div class="sidebar" id="sidebar">
@@ -211,13 +211,14 @@ const stops = [
   { id:7, name:"Can Tho", emoji:"🚣", lat:10.05, lng:105.75, country:"vietnam", flag:"🇻🇳", days:"D21–D22", dates:"Nov 4–5", dur:"2 days", dnum:2, excursion:true, baseIdx:6, note:"Round trip from HCMC.", highlights:"Cai Rang & Phong Dien floating markets, homestay" },
   { id:8, name:"Bangkok", emoji:"🏙️", lat:13.76, lng:100.50, country:"thailand", flag:"🇹🇭", days:"D23–D26", dates:"Nov 6–9", dur:"4 days", dnum:4, highlights:"Grand Palace, Chinatown, Chatuchak, Muay Thai", food:"Pad Thai, Som Tam, Mango Sticky Rice" },
   { id:9, name:"Chiang Mai", emoji:"⛰️", lat:18.79, lng:98.99, country:"thailand", flag:"🇹🇭", days:"D28–D33", dates:"Nov 11–16", dur:"6 days", dnum:6, highlights:"Elephant Nature Park, temples, cooking class, markets" },
-  { id:10, name:"Koh Lanta", emoji:"🏖️", lat:7.65, lng:99.04, country:"thailand", flag:"🇹🇭", days:"D35–D40", dates:"Nov 18–23", dur:"6 days", dnum:6, highlights:"Beaches, Old Town, snorkeling, pure relaxation" },
-  { id:11, name:"Langkawi", emoji:"🏝️", lat:6.35, lng:99.80, country:"malaysia", flag:"🇲🇾", days:"D43–D46", dates:"Nov 26–29", dur:"4 days", dnum:4, highlights:"Sky Bridge, beaches, mangroves, duty-free" },
-  { id:12, name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D50", dates:"Nov 30 – Dec 3", dur:"4 days", dnum:4, highlights:"George Town street art, temples, food capital", food:"Char Kway Teow, Laksa, Cendol" },
-  { id:13, name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D51–D52", dates:"Dec 4–5", dur:"2 days", dnum:2, highlights:"Tea plantations, Mossy Forest, strawberry farms" },
-  { id:14, name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D53–D56", dates:"Dec 6–9", dur:"4 days", dnum:4, highlights:"Petronas, Batu Caves, Jalan Alor food street", food:"Nasi Lemak, Roti Canai, Satay" },
-  { id:15, name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D57–D58", dates:"Dec 10–11", dur:"2 days", dnum:2, excursion:true, baseIdx:14, note:"Round trip from KL. 1 night.", highlights:"Jonker Street, colonial history, river cruise" },
-  { id:16, name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D59–D62", dates:"Dec 12–15", dur:"4 days", dnum:4, highlights:"Rest, shopping, farewell meals" },
+  { id:10, name:"Krabi", emoji:"✈️", lat:8.0986, lng:98.9862, country:"thailand", flag:"🇹🇭", days:"D34", dates:"Nov 17", dur:"transit", dnum:0, transit:true, note:"Transit — aéroport pour Koh Lanta." },
+  { id:11, name:"Koh Lanta", emoji:"🏖️", lat:7.65, lng:99.04, country:"thailand", flag:"🇹🇭", days:"D35–D40", dates:"Nov 18–23", dur:"6 days", dnum:6, highlights:"Beaches, Old Town, snorkeling, pure relaxation" },
+  { id:12, name:"Langkawi", emoji:"🏝️", lat:6.35, lng:99.80, country:"malaysia", flag:"🇲🇾", days:"D43–D46", dates:"Nov 26–29", dur:"4 days", dnum:4, highlights:"Sky Bridge, beaches, mangroves, duty-free" },
+  { id:13, name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D50", dates:"Nov 30 – Dec 3", dur:"4 days", dnum:4, highlights:"George Town street art, temples, food capital", food:"Char Kway Teow, Laksa, Cendol" },
+  { id:14, name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D51–D52", dates:"Dec 4–5", dur:"2 days", dnum:2, highlights:"Tea plantations, Mossy Forest, strawberry farms" },
+  { id:15, name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D53–D56", dates:"Dec 6–9", dur:"4 days", dnum:4, highlights:"Petronas, Batu Caves, Jalan Alor food street", food:"Nasi Lemak, Roti Canai, Satay" },
+  { id:16, name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D57–D58", dates:"Dec 10–11", dur:"2 days", dnum:2, excursion:true, baseIdx:15, note:"Round trip from KL. 1 night.", highlights:"Jonker Street, colonial history, river cruise" },
+  { id:17, name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D59–D62", dates:"Dec 12–15", dur:"4 days", dnum:4, highlights:"Rest, shopping, farewell meals" },
 ];
 
 // Routes: actual transport between stops (reflecting real flow)
@@ -249,20 +250,22 @@ const routes = [
   { from:6, to:8, segments:[{ icon:"✈️", mode:"Flight", time:"1h30", cost:"60€/pp" }], flight:true },
   // Bangkok → Chiang Mai
   { from:8, to:9, segments:[{ icon:"🚂", mode:"Night train", time:"12–14h", cost:"30€/pp" }], flight:false },
-  // Chiang Mai → Koh Lanta (flight to Krabi + ferry)
-  { from:9, to:10, segments:[{ icon:"✈️", mode:"Flight CNX→KBV", time:"2h", cost:"~70€/pp" }, { icon:"🚢", mode:"Ferry", time:"1h30", cost:"~15€/pp" }], flight:true },
+  // Chiang Mai → Krabi (flight)
+  { from:9, to:10, segments:[{ icon:"✈️", mode:"Flight CNX→KBV", time:"2h", cost:"~70€/pp" }], flight:true },
+  // Krabi → Koh Lanta (ferry)
+  { from:10, to:11, segments:[{ icon:"🚢", mode:"Ferry", time:"1h30", cost:"~15€/pp" }], flight:false },
   // Koh Lanta → Langkawi (ferry via Koh Lipe, international crossing)
-  { from:10, to:11, segments:[{ icon:"🚢", mode:"Ferry via Koh Lipe", time:"5h30–6h30", cost:"~85€/pp" }], flight:false },
+  { from:11, to:12, segments:[{ icon:"🚢", mode:"Ferry via Koh Lipe", time:"5h30–6h30", cost:"~85€/pp" }], flight:false },
   // Langkawi → Penang (ferry)
-  { from:11, to:12, segments:[{ icon:"🚢", mode:"Ferry", time:"2h45", cost:"15€/pp" }], flight:false },
+  { from:12, to:13, segments:[{ icon:"🚢", mode:"Ferry", time:"2h45", cost:"15€/pp" }], flight:false },
   // Penang → Cameron Highlands
-  { from:12, to:13, segments:[{ icon:"🚌", mode:"Bus", time:"4–5h", cost:"10–15€/pp" }], flight:false },
+  { from:13, to:14, segments:[{ icon:"🚌", mode:"Bus", time:"4–5h", cost:"10–15€/pp" }], flight:false },
   // Cameron → KL
-  { from:13, to:14, segments:[{ icon:"🚌", mode:"Bus", time:"4h", cost:"10–15€/pp" }], flight:false },
+  { from:14, to:15, segments:[{ icon:"🚌", mode:"Bus", time:"4h", cost:"10–15€/pp" }], flight:false },
   // KL → Melaka (excursion out)
-  { from:14, to:15, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"10€/pp" }], flight:false, excursionOut:true },
+  { from:15, to:16, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"10€/pp" }], flight:false, excursionOut:true },
   // Melaka → KL (excursion return)
-  { from:15, to:14, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"~10€/pp" }], flight:false, excursionReturn:true, label:"Return to KL" },
+  { from:16, to:15, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"~10€/pp" }], flight:false, excursionReturn:true, label:"Return to KL" },
 ];
 
 const colors = { vietnam:'#e74c3c', thailand:'#f39c12', malaysia:'#3498db' };
@@ -273,11 +276,11 @@ const countryNames = { vietnam:'🇻🇳 Vietnam', thailand:'🇹🇭 Thailand',
 function buildSidebar() {
   let html = '', lastCountry = '';
   // Ordered display (skip duplicate KL departure in sidebar, show inline)
-  const displayOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+  const displayOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
 
   displayOrder.forEach(idx => {
     const s = stops[idx];
-    if (idx === 16) return; // departure shown as note on KL
+    if (idx === 17) return; // departure shown as note on KL
 
     if (s.country !== lastCountry) {
       html += `<div class="country-divider" style="color:${colors[s.country]};">${countryNames[s.country]}</div>`;
@@ -380,10 +383,10 @@ routes.forEach(route=>{
 // Markers
 const markersArr=[];
 // Tooltip direction hints for dense areas (auto works for most)
-const labelDir={0:'left',1:'right',2:'left',3:'right',4:'right',5:'left',6:'left',7:'right',8:'left',9:'right',10:'left',11:'right',12:'left',13:'right',14:'left',15:'right'};
+const labelDir={0:'left',1:'right',2:'left',3:'right',4:'right',5:'left',6:'left',7:'right',8:'left',9:'right',10:'right',11:'left',12:'right',13:'left',14:'right',15:'left',16:'right'};
 
 stops.forEach((s,i)=>{
-  if(i===16) return; // skip departure duplicate
+  if(i===17) return; // skip departure duplicate
   const isExc=s.excursion;
   const isTransit=s.transit;
   const sz=isTransit?'small':isExc?'excursion':s.dnum>=5?'large':s.dnum<=2?'small':'';
