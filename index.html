@@ -238,12 +238,12 @@ const routes = [
   { from:2, to:0, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false, excursionReturn:true, label:"Return to Hanoi" },
   // Hanoi → Hoi An (transit day D9: night train + Grab transfer)
   { from:0, to:3, segments:[{ icon:"🚂", mode:"Night train S20", time:"14–16h", cost:"~25€/pp" }, { icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:false, label:"D9 Night train" },
-  // Hoi An → Huế (minivan via Hai Van Pass)
-  { from:3, to:4, segments:[{ icon:"🚐", mode:"Minivan Hai Van Pass", time:"3–4h", cost:"6–8€/pp" }], flight:false, labelOffset:[0.4, 0.3] },
+  // Hoi An → Huế (minivan via Hai Van Pass) — label offset west (inland)
+  { from:3, to:4, segments:[{ icon:"🚐", mode:"Hai Van Pass", time:"3–4h", cost:"6–8€/pp" }], flight:false, labelOffset:[-0.15, -0.6] },
   // Huế → Da Nang (train, airport transfer — no line drawn, reuses Hoi An↔Huế path)
-  { from:4, to:3, segments:[{ icon:"🚂", mode:"Train→Da Nang", time:"2h30", cost:"~10€/pp" }], flight:false, noLine:true, labelOffset:[-0.3, -0.4] },
+  { from:4, to:3, segments:[{ icon:"🚂", mode:"Train→Da Nang", time:"2h30", cost:"~10€/pp" }], flight:false, noLine:true, labelOffset:[0.15, 0.6] },
   // Da Nang (Hoi An) → HCMC (flight)
-  { from:3, to:5, segments:[{ icon:"✈️", mode:"Flight DAD→SGN", time:"2h", cost:"50€/pp" }], flight:true, labelOffset:[0.5, 0] },
+  { from:3, to:5, segments:[{ icon:"✈️", mode:"Flight DAD→SGN", time:"2h", cost:"50€/pp" }], flight:true },
   // HCMC → Can Tho (excursion out)
   { from:5, to:6, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionOut:true },
   // Can Tho → HCMC (excursion return)
@@ -382,7 +382,7 @@ routes.forEach(route=>{
 
 // Markers
 const markersArr=[];
-const labelOffsets={0:[-1,-20],1:[1,0],2:[-1,8],3:[1,-5],4:[-1,5],5:[-1,-5],6:[1,5],7:[-1,-8],8:[1,-5],9:[-1,0],10:[1,-8],11:[-1,0],12:[1,0],13:[-1,8],14:[1,0]};
+const labelOffsets={0:[-1,-20],1:[1,0],2:[-1,8],3:[1,-8],4:[-1,-8],5:[-1,-5],6:[1,5],7:[-1,-8],8:[1,-5],9:[-1,0],10:[1,-8],11:[-1,0],12:[1,0],13:[-1,8],14:[1,0]};
 
 stops.forEach((s,i)=>{
   if(i===15) return; // skip departure duplicate
