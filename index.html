@@ -234,8 +234,8 @@ const routes = [
   { from:0, to:2, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false, excursionOut:true },
   // Ninh Binh → Hanoi (excursion return)
   { from:2, to:0, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"8–12€/pp" }], flight:false, excursionReturn:true, label:"Return to Hanoi" },
-  // Hanoi → Hoi An (transit day D9: flight or night train)
-  { from:0, to:3, segments:[{ icon:"✈️", mode:"Flight HAN→DAD", time:"1h15", cost:"40–60€/pp" }, { icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:true, label:"D9 Transit" },
+  // Hanoi → Hoi An (transit day D9: night train confirmed)
+  { from:0, to:3, segments:[{ icon:"🚂", mode:"Night train S20", time:"14–16h", cost:"~25€/pp" }, { icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:false, label:"D9 Night train" },
   // Hoi An → Huế (minivan via Hai Van Pass)
   { from:3, to:4, segments:[{ icon:"🚐", mode:"Minivan Hai Van Pass", time:"3–4h", cost:"6–8€/pp" }], flight:false },
   // Huế → HCMC (train to Da Nang + flight)
