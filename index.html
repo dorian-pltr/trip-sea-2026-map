@@ -127,6 +127,16 @@
   .marker-pin.vietnam { background: linear-gradient(135deg, #e74c3c, #c0392b); }
   .marker-pin.thailand { background: linear-gradient(135deg, #f39c12, #e67e22); }
   .marker-pin.malaysia { background: linear-gradient(135deg, #3498db, #2980b9); }
+  .marker-pin.planb { background: linear-gradient(135deg, #9b59b6, #8e44ad); border: 2px dashed rgba(255,255,255,0.6); }
+
+  .city-tooltip-planb {
+    padding: 3px 8px !important; border-radius: 5px !important; font-size: 11px !important;
+    font-weight: 600 !important; white-space: nowrap !important; color: #d4aaff !important;
+    background: rgba(30,10,50,0.9) !important; border: 1px dashed rgba(155,89,182,0.5) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important; pointer-events: none !important;
+    font-family: 'Inter', system-ui, sans-serif !important; font-style: italic !important;
+  }
+  .city-tooltip-planb::before { display: none !important; }
 
   .city-tooltip {
     padding: 3px 8px !important; border-radius: 5px !important; font-size: 11px !important;
@@ -192,6 +202,7 @@
   <div class="leg"><span class="leg-line" style="background:linear-gradient(90deg,#e74c3c,#f39c12);"></span> Ground</div>
   <div class="leg"><span class="leg-dash"></span> ✈️ Flight</div>
   <div class="leg"><span style="width:14px;height:14px;border:2px dashed rgba(255,255,255,0.4);border-radius:50%;display:inline-block;"></span> Excursion</div>
+  <div class="leg"><span class="leg-dot" style="background:linear-gradient(135deg,#9b59b6,#8e44ad);border:1px dashed rgba(255,255,255,0.5);"></span> 🌀 Plan B</div>
 </div>
 
 <div id="map"></div>
@@ -207,18 +218,19 @@ const stops = [
   { id:3, name:"Da Nang", emoji:"✈️", lat:16.054, lng:108.202, country:"vietnam", flag:"🇻🇳", days:"D9,D16", dates:"Oct 23, Oct 30", dur:"transit", dnum:0, transit:true, note:"Hub de transit — arrivée train de nuit, départ vol Saigon.", highlights:"Marble Mountains (en route)" },
   { id:4, name:"Hoi An", emoji:"🏮", lat:15.88, lng:108.34, country:"vietnam", flag:"🇻🇳", days:"D10–D13", dates:"Oct 24–27", dur:"4 days", dnum:4, note:"⚠️ Typhoon risk in October — check weather D-7.", highlights:"Ancient Town, Tra Que cooking class, lantern boats, tailors, basket boats", food:"Cao Lau, Banh Mi Phuong, Mi Quang, White Rose" },
   { id:5, name:"Huế", emoji:"🏯", lat:16.4637, lng:107.5909, country:"vietnam", flag:"🇻🇳", days:"D14–D15", dates:"Oct 28–29", dur:"2 days", dnum:2, highlights:"Imperial City, Khai Dinh Tomb, Dong Ba Market, Thien Mu Pagoda", food:"Bun Bo Hue, Banh Khoai, Banh Beo, Bun Rieu" },
-  { id:6, name:"Ho Chi Minh City", emoji:"🌆", lat:10.82, lng:106.63, country:"vietnam", flag:"🇻🇳", days:"D16–D20", dates:"Oct 30 – Nov 3", dur:"5 days", dnum:5, highlights:"Cu Chi Tunnels, War Remnants Museum, District 4 food, A O Show", food:"Banh Mi Huynh Hoa, Com Tam, Bo Ne, Pho Hoa" },
-  { id:7, name:"Can Tho", emoji:"🚣", lat:10.05, lng:105.75, country:"vietnam", flag:"🇻🇳", days:"D21–D22", dates:"Nov 4–5", dur:"2 days", dnum:2, excursion:true, baseIdx:6, note:"Round trip from HCMC.", highlights:"Cai Rang & Phong Dien floating markets, homestay" },
-  { id:8, name:"Bangkok", emoji:"🏙️", lat:13.76, lng:100.50, country:"thailand", flag:"🇹🇭", days:"D23–D26", dates:"Nov 6–9", dur:"4 days", dnum:4, highlights:"Grand Palace, Chinatown, Chatuchak, Muay Thai", food:"Pad Thai, Som Tam, Mango Sticky Rice" },
-  { id:9, name:"Chiang Mai", emoji:"⛰️", lat:18.79, lng:98.99, country:"thailand", flag:"🇹🇭", days:"D28–D33", dates:"Nov 11–16", dur:"6 days", dnum:6, highlights:"Elephant Nature Park, temples, cooking class, markets" },
-  { id:10, name:"Krabi", emoji:"✈️", lat:8.0986, lng:98.9862, country:"thailand", flag:"🇹🇭", days:"D34", dates:"Nov 17", dur:"transit", dnum:0, transit:true, note:"Transit — aéroport pour Koh Lanta." },
-  { id:11, name:"Koh Lanta", emoji:"🏖️", lat:7.65, lng:99.04, country:"thailand", flag:"🇹🇭", days:"D35–D40", dates:"Nov 18–23", dur:"6 days", dnum:6, highlights:"Beaches, Old Town, snorkeling, pure relaxation" },
-  { id:12, name:"Langkawi", emoji:"🏝️", lat:6.35, lng:99.80, country:"malaysia", flag:"🇲🇾", days:"D43–D46", dates:"Nov 26–29", dur:"4 days", dnum:4, highlights:"Sky Bridge, beaches, mangroves, duty-free" },
-  { id:13, name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D50", dates:"Nov 30 – Dec 3", dur:"4 days", dnum:4, highlights:"George Town street art, temples, food capital", food:"Char Kway Teow, Laksa, Cendol" },
-  { id:14, name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D51–D52", dates:"Dec 4–5", dur:"2 days", dnum:2, highlights:"Tea plantations, Mossy Forest, strawberry farms" },
-  { id:15, name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D53–D56", dates:"Dec 6–9", dur:"4 days", dnum:4, highlights:"Petronas, Batu Caves, Jalan Alor food street", food:"Nasi Lemak, Roti Canai, Satay" },
-  { id:16, name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D57–D58", dates:"Dec 10–11", dur:"2 days", dnum:2, excursion:true, baseIdx:15, note:"Round trip from KL. 1 night.", highlights:"Jonker Street, colonial history, river cruise" },
-  { id:17, name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D59–D62", dates:"Dec 12–15", dur:"4 days", dnum:4, highlights:"Rest, shopping, farewell meals" },
+  { id:6, name:"Đà Lạt 🌀", emoji:"⛰️", lat:11.9404, lng:108.4583, country:"vietnam", flag:"🇻🇳", days:"D9–D14", dates:"Oct 23–28", dur:"4 days + transit", dnum:4, planb:true, note:"🌀 PLAN B TYPHON — remplace Hoi An + Huế si typhon sur le Centre.", highlights:"Canyoning, coffee plantations, night market, Crazy House, waterfalls", food:"Bánh tráng nướng, Nem nướng, Kem bơ, Cà phê chồn" },
+  { id:7, name:"Ho Chi Minh City", emoji:"🌆", lat:10.82, lng:106.63, country:"vietnam", flag:"🇻🇳", days:"D16–D20", dates:"Oct 30 – Nov 3", dur:"5 days", dnum:5, highlights:"Cu Chi Tunnels, War Remnants Museum, District 4 food, A O Show", food:"Banh Mi Huynh Hoa, Com Tam, Bo Ne, Pho Hoa" },
+  { id:8, name:"Can Tho", emoji:"🚣", lat:10.05, lng:105.75, country:"vietnam", flag:"🇻🇳", days:"D21–D22", dates:"Nov 4–5", dur:"2 days", dnum:2, excursion:true, baseIdx:7, note:"Round trip from HCMC.", highlights:"Cai Rang & Phong Dien floating markets, homestay" },
+  { id:9, name:"Bangkok", emoji:"🏙️", lat:13.76, lng:100.50, country:"thailand", flag:"🇹🇭", days:"D23–D26", dates:"Nov 6–9", dur:"4 days", dnum:4, highlights:"Grand Palace, Chinatown, Chatuchak, Muay Thai", food:"Pad Thai, Som Tam, Mango Sticky Rice" },
+  { id:10, name:"Chiang Mai", emoji:"⛰️", lat:18.79, lng:98.99, country:"thailand", flag:"🇹🇭", days:"D28–D33", dates:"Nov 11–16", dur:"6 days", dnum:6, highlights:"Elephant Nature Park, temples, cooking class, markets" },
+  { id:11, name:"Krabi", emoji:"✈️", lat:8.0986, lng:98.9862, country:"thailand", flag:"🇹🇭", days:"D34", dates:"Nov 17", dur:"transit", dnum:0, transit:true, note:"Transit — aéroport pour Koh Lanta." },
+  { id:12, name:"Koh Lanta", emoji:"🏖️", lat:7.65, lng:99.04, country:"thailand", flag:"🇹🇭", days:"D35–D40", dates:"Nov 18–23", dur:"6 days", dnum:6, highlights:"Beaches, Old Town, snorkeling, pure relaxation" },
+  { id:13, name:"Langkawi", emoji:"🏝️", lat:6.35, lng:99.80, country:"malaysia", flag:"🇲🇾", days:"D43–D46", dates:"Nov 26–29", dur:"4 days", dnum:4, highlights:"Sky Bridge, beaches, mangroves, duty-free" },
+  { id:14, name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D50", dates:"Nov 30 – Dec 3", dur:"4 days", dnum:4, highlights:"George Town street art, temples, food capital", food:"Char Kway Teow, Laksa, Cendol" },
+  { id:15, name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D51–D52", dates:"Dec 4–5", dur:"2 days", dnum:2, highlights:"Tea plantations, Mossy Forest, strawberry farms" },
+  { id:16, name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D53–D56", dates:"Dec 6–9", dur:"4 days", dnum:4, highlights:"Petronas, Batu Caves, Jalan Alor food street", food:"Nasi Lemak, Roti Canai, Satay" },
+  { id:17, name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D57–D58", dates:"Dec 10–11", dur:"2 days", dnum:2, excursion:true, baseIdx:16, note:"Round trip from KL. 1 night.", highlights:"Jonker Street, colonial history, river cruise" },
+  { id:18, name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D59–D62", dates:"Dec 12–15", dur:"4 days", dnum:4, highlights:"Rest, shopping, farewell meals" },
 ];
 
 // Routes: actual transport between stops (reflecting real flow)
@@ -241,31 +253,35 @@ const routes = [
   // Huế → Da Nang (train back to airport)
   { from:5, to:3, segments:[{ icon:"🚂", mode:"Train", time:"2h30", cost:"~10€/pp" }], flight:false },
   // Da Nang → HCMC (flight)
-  { from:3, to:6, segments:[{ icon:"✈️", mode:"Flight DAD→SGN", time:"2h", cost:"50€/pp" }], flight:true },
+  { from:3, to:7, segments:[{ icon:"✈️", mode:"Flight DAD→SGN", time:"2h", cost:"50€/pp" }], flight:true },
+  // --- PLAN B TYPHON: Hanoi → Da Lat → Saigon ---
+  { from:0, to:6, segments:[{ icon:"✈️", mode:"Flight HAN→DLI", time:"2h", cost:"~40€/pp" }], flight:true, planb:true },
+  { from:6, to:7, segments:[{ icon:"✈️", mode:"Flight DLI→SGN", time:"1h", cost:"~30€/pp" }], flight:true, planb:true },
+  // --- END PLAN B ---
   // HCMC → Can Tho (excursion out)
-  { from:6, to:7, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionOut:true },
+  { from:7, to:8, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionOut:true },
   // Can Tho → HCMC (excursion return)
-  { from:7, to:6, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionReturn:true, label:"Return to HCMC" },
+  { from:8, to:7, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionReturn:true, label:"Return to HCMC" },
   // HCMC → Bangkok
-  { from:6, to:8, segments:[{ icon:"✈️", mode:"Flight", time:"1h30", cost:"60€/pp" }], flight:true },
+  { from:7, to:9, segments:[{ icon:"✈️", mode:"Flight", time:"1h30", cost:"60€/pp" }], flight:true },
   // Bangkok → Chiang Mai
-  { from:8, to:9, segments:[{ icon:"🚂", mode:"Night train", time:"12–14h", cost:"30€/pp" }], flight:false },
+  { from:9, to:10, segments:[{ icon:"🚂", mode:"Night train", time:"12–14h", cost:"30€/pp" }], flight:false },
   // Chiang Mai → Krabi (flight)
-  { from:9, to:10, segments:[{ icon:"✈️", mode:"Flight CNX→KBV", time:"2h", cost:"~70€/pp" }], flight:true },
+  { from:10, to:11, segments:[{ icon:"✈️", mode:"Flight CNX→KBV", time:"2h", cost:"~70€/pp" }], flight:true },
   // Krabi → Koh Lanta (ferry)
-  { from:10, to:11, segments:[{ icon:"🚢", mode:"Ferry", time:"1h30", cost:"~15€/pp" }], flight:false },
+  { from:11, to:12, segments:[{ icon:"🚢", mode:"Ferry", time:"1h30", cost:"~15€/pp" }], flight:false },
   // Koh Lanta → Langkawi (ferry via Koh Lipe, international crossing)
-  { from:11, to:12, segments:[{ icon:"🚢", mode:"Ferry via Koh Lipe", time:"5h30–6h30", cost:"~85€/pp" }], flight:false },
+  { from:12, to:13, segments:[{ icon:"🚢", mode:"Ferry via Koh Lipe", time:"5h30–6h30", cost:"~85€/pp" }], flight:false },
   // Langkawi → Penang (ferry)
-  { from:12, to:13, segments:[{ icon:"🚢", mode:"Ferry", time:"2h45", cost:"15€/pp" }], flight:false },
+  { from:13, to:14, segments:[{ icon:"🚢", mode:"Ferry", time:"2h45", cost:"15€/pp" }], flight:false },
   // Penang → Cameron Highlands
-  { from:13, to:14, segments:[{ icon:"🚌", mode:"Bus", time:"4–5h", cost:"10–15€/pp" }], flight:false },
+  { from:14, to:15, segments:[{ icon:"🚌", mode:"Bus", time:"4–5h", cost:"10–15€/pp" }], flight:false },
   // Cameron → KL
-  { from:14, to:15, segments:[{ icon:"🚌", mode:"Bus", time:"4h", cost:"10–15€/pp" }], flight:false },
+  { from:15, to:16, segments:[{ icon:"🚌", mode:"Bus", time:"4h", cost:"10–15€/pp" }], flight:false },
   // KL → Melaka (excursion out)
-  { from:15, to:16, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"10€/pp" }], flight:false, excursionOut:true },
+  { from:16, to:17, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"10€/pp" }], flight:false, excursionOut:true },
   // Melaka → KL (excursion return)
-  { from:16, to:15, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"~10€/pp" }], flight:false, excursionReturn:true, label:"Return to KL" },
+  { from:17, to:16, segments:[{ icon:"🚌", mode:"Bus", time:"2h", cost:"~10€/pp" }], flight:false, excursionReturn:true, label:"Return to KL" },
 ];
 
 const colors = { vietnam:'#e74c3c', thailand:'#f39c12', malaysia:'#3498db' };
@@ -276,11 +292,11 @@ const countryNames = { vietnam:'🇻🇳 Vietnam', thailand:'🇹🇭 Thailand',
 function buildSidebar() {
   let html = '', lastCountry = '';
   // Ordered display (skip duplicate KL departure in sidebar, show inline)
-  const displayOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+  const displayOrder = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
 
   displayOrder.forEach(idx => {
     const s = stops[idx];
-    if (idx === 17) return; // departure shown as note on KL
+    if (idx === 18) return; // departure shown as note on KL
 
     if (s.country !== lastCountry) {
       html += `<div class="country-divider" style="color:${colors[s.country]};">${countryNames[s.country]}</div>`;
@@ -288,10 +304,12 @@ function buildSidebar() {
     }
 
     const isExc = s.excursion;
-    html += `<div class="stop-item ${isExc?'excursion':''}" data-idx="${idx}" onclick="flyTo(${idx})">
-      <div class="stop-num ${isExc?'exc':''}" style="background:linear-gradient(135deg,${colors[s.country]},${colors[s.country]}cc);">${idx+1}</div>
+    const isPB = s.planb;
+    const numBg = isPB ? 'background:linear-gradient(135deg,#9b59b6,#8e44ad);border:2px dashed rgba(255,255,255,0.4);' : `background:linear-gradient(135deg,${colors[s.country]},${colors[s.country]}cc);`;
+    html += `<div class="stop-item ${isExc?'excursion':''}" data-idx="${idx}" onclick="flyTo(${idx})" ${isPB?'style="opacity:0.75;border-left:3px solid #9b59b6;"':''}>
+      <div class="stop-num ${isExc?'exc':''}" style="${numBg}">${isPB?'🌀':idx+1}</div>
       <div class="stop-details">
-        <div class="stop-name">${s.emoji} ${s.name} ${isExc?'<span style="font-size:9px;opacity:0.5;">↩ excursion</span>':''}</div>
+        <div class="stop-name">${s.emoji} ${s.name} ${isExc?'<span style="font-size:9px;opacity:0.5;">↩ excursion</span>':''}${isPB?'<span style="font-size:9px;color:#9b59b6;"> PLAN B</span>':''}</div>
         <div class="stop-meta">${s.dates} · ${s.dur} (${s.days})</div>
         ${s.note?`<div class="stop-note">${s.note}</div>`:''}
       </div>
@@ -357,42 +375,55 @@ routes.forEach(route=>{
   // Build text label
   const labelText = route.segments.map(s=>`${s.icon} ${s.time}`).join(' + ');
 
+  const isPlanB = route.planb;
+  const textAttrs = {fill: isPlanB ? '#d4aaff' : '#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'};
+
   if(route.flight){
     const curve=bezierCurve(from,to);
-    // Glow
-    L.polyline(curve,{color:colorL,weight:8,opacity:0.1,lineCap:'round'}).addTo(map);
-    // Dashed line
-    const flightLine=L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
-    if(!isReturn){
-      flightLine.setText(labelText,{repeat:false,center:true,offset:14,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
+    if(isPlanB){
+      // Plan B: purple dashed with glow
+      L.polyline(curve,{color:'#9b59b6',weight:6,opacity:0.15,lineCap:'round'}).addTo(map);
+      const flightLine=L.polyline(curve,{color:'#9b59b6',weight:2.5,dashArray:'6 8',opacity:0.6,lineCap:'round'}).addTo(map);
+      if(!isReturn) flightLine.setText('🌀 '+labelText,{repeat:false,center:true,offset:14,attributes:textAttrs});
+    } else {
+      L.polyline(curve,{color:colorL,weight:8,opacity:0.1,lineCap:'round'}).addTo(map);
+      const flightLine=L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
+      if(!isReturn) flightLine.setText(labelText,{repeat:false,center:true,offset:14,attributes:textAttrs});
     }
   } else if(isReturn){
     // Return routes: no line drawn
   } else {
-    // Glow
-    L.polyline([from,to],{color:colorL,weight:6,opacity:0.12,lineCap:'round'}).addTo(map);
-    // Main line with text
-    const mainLine=L.polyline([from,to],{color:color,weight:3,opacity:0.8,lineCap:'round'}).addTo(map);
-    // Ensure text reads left-to-right: flip points if needed
-    const needFlip = from[1] > to[1]; // if going right-to-left
-    const textLine = needFlip ? L.polyline([to,from],{opacity:0}).addTo(map) : mainLine;
-    textLine.setText(labelText,{repeat:false,center:true,offset:12,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
+    if(isPlanB){
+      L.polyline([from,to],{color:'#9b59b6',weight:4,opacity:0.12,lineCap:'round'}).addTo(map);
+      const mainLine=L.polyline([from,to],{color:'#9b59b6',weight:2.5,dashArray:'6 8',opacity:0.6,lineCap:'round'}).addTo(map);
+      const needFlip = from[1] > to[1];
+      const textLine = needFlip ? L.polyline([to,from],{opacity:0}).addTo(map) : mainLine;
+      textLine.setText('🌀 '+labelText,{repeat:false,center:true,offset:12,attributes:textAttrs});
+    } else {
+      L.polyline([from,to],{color:colorL,weight:6,opacity:0.12,lineCap:'round'}).addTo(map);
+      const mainLine=L.polyline([from,to],{color:color,weight:3,opacity:0.8,lineCap:'round'}).addTo(map);
+      const needFlip = from[1] > to[1];
+      const textLine = needFlip ? L.polyline([to,from],{opacity:0}).addTo(map) : mainLine;
+      textLine.setText(labelText,{repeat:false,center:true,offset:12,attributes:textAttrs});
+    }
   }
 });
 
 // Markers
 const markersArr=[];
 // Tooltip direction hints for dense areas (auto works for most)
-const labelDir={0:'left',1:'right',2:'left',3:'right',4:'right',5:'left',6:'left',7:'right',8:'left',9:'right',10:'right',11:'left',12:'right',13:'left',14:'right',15:'left',16:'right'};
+const labelDir={0:'left',1:'right',2:'left',3:'right',4:'right',5:'left',6:'right',7:'left',8:'right',9:'left',10:'right',11:'right',12:'left',13:'right',14:'left',15:'right',16:'left',17:'right'};
 
 stops.forEach((s,i)=>{
-  if(i===17) return; // skip departure duplicate
+  if(i===18) return; // skip departure duplicate
   const isExc=s.excursion;
   const isTransit=s.transit;
-  const sz=isTransit?'small':isExc?'excursion':s.dnum>=5?'large':s.dnum<=2?'small':'';
+  const isPlanB=s.planb;
+  const sz=isTransit?'small':isPlanB?'':isExc?'excursion':s.dnum>=5?'large':s.dnum<=2?'small':'';
+  const pinClass=isPlanB?'planb':s.country;
   const icon=L.divIcon({
     className:'',
-    html:`<div class="marker-pin ${sz} ${s.country}">${i+1}</div>`,
+    html:`<div class="marker-pin ${sz} ${pinClass}">${isPlanB?'🌀':i+1}</div>`,
     iconSize:isExc?[22,22]:sz==='large'?[36,36]:sz==='small'?[24,24]:[30,30],
     iconAnchor:isExc?[11,11]:sz==='large'?[18,18]:sz==='small'?[12,12]:[15,15]
   });
@@ -406,7 +437,7 @@ stops.forEach((s,i)=>{
   `;
   const marker=L.marker([s.lat,s.lng],{icon}).addTo(map);
   marker.bindPopup(popupHtml,{className:'custom-popup',closeButton:true,maxWidth:280});
-  marker.bindTooltip(s.name,{permanent:true,direction:labelDir[i]||'auto',className:'city-tooltip',offset:[0,0]});
+  marker.bindTooltip(s.name,{permanent:true,direction:labelDir[i]||'auto',className:isPlanB?'city-tooltip-planb':'city-tooltip',offset:[0,0]});
   markersArr.push(marker);
 });
 
