@@ -361,7 +361,7 @@ routes.forEach(route=>{
     // Dashed line
     const flightLine=L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
     if(!isReturn){
-      flightLine.setText(labelText,{repeat:false,offset:14,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
+      flightLine.setText(labelText,{repeat:false,center:true,offset:14,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
     }
   } else if(isReturn){
     // Return routes: no line drawn
@@ -373,7 +373,7 @@ routes.forEach(route=>{
     // Ensure text reads left-to-right: flip points if needed
     const needFlip = from[1] > to[1]; // if going right-to-left
     const textLine = needFlip ? L.polyline([to,from],{opacity:0}).addTo(map) : mainLine;
-    textLine.setText(labelText,{repeat:false,offset:12,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
+    textLine.setText(labelText,{repeat:false,center:true,offset:12,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
   }
 });
 
