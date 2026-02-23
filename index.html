@@ -237,11 +237,11 @@ const routes = [
   // Hanoi → Hoi An (transit day D9: night train + Grab transfer)
   { from:0, to:3, segments:[{ icon:"🚂", mode:"Night train S20", time:"14–16h", cost:"~25€/pp" }, { icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:false, label:"D9 Night train" },
   // Hoi An → Huế (minivan via Hai Van Pass)
-  { from:3, to:4, segments:[{ icon:"🚐", mode:"Minivan Hai Van Pass", time:"3–4h", cost:"6–8€/pp" }], flight:false },
-  // Huế → Da Nang (train, airport transfer)
-  { from:4, to:3, segments:[{ icon:"🚂", mode:"Train", time:"2h30", cost:"~10€/pp" }], flight:false, label:"To Da Nang airport" },
+  { from:3, to:4, segments:[{ icon:"🚐", mode:"Minivan Hai Van Pass", time:"3–4h", cost:"6–8€/pp" }], flight:false, labelOffset:[0.4, 0.3] },
+  // Huế → Da Nang (train, airport transfer — no line drawn, reuses Hoi An↔Huế path)
+  { from:4, to:3, segments:[{ icon:"🚂", mode:"Train→Da Nang", time:"2h30", cost:"~10€/pp" }], flight:false, noLine:true, labelOffset:[-0.3, -0.4] },
   // Da Nang (Hoi An) → HCMC (flight)
-  { from:3, to:5, segments:[{ icon:"✈️", mode:"Flight DAD→SGN", time:"2h", cost:"50€/pp" }], flight:true },
+  { from:3, to:5, segments:[{ icon:"✈️", mode:"Flight DAD→SGN", time:"2h", cost:"50€/pp" }], flight:true, labelOffset:[0.5, 0] },
   // HCMC → Can Tho (excursion out)
   { from:5, to:6, segments:[{ icon:"🚐", mode:"Bus/Van", time:"3–4h", cost:"10–15€/pp" }], flight:false, excursionOut:true },
   // Can Tho → HCMC (excursion return)
@@ -358,10 +358,9 @@ routes.forEach(route=>{
     L.polyline(curve,{color:colorL,weight:8,opacity:0.1,lineCap:'round'}).addTo(map);
     L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
     midPoint=curve[Math.floor(curve.length/2)];
-  } else if(isReturn){
-    // Return routes: same style as outbound, no line drawn (same road back, already shown)
+  } else if(isReturn || route.noLine){
+    // Return routes / noLine: no line drawn (same road, already shown)
     midPoint=[(from[0]+to[0])/2,(from[1]+to[1])/2];
-    // Skip drawing — the outbound line already covers this route
   } else {
     L.polyline([from,to],{color:colorL,weight:6,opacity:0.12,lineCap:'round'}).addTo(map);
     L.polyline([from,to],{color:color,weight:3,opacity:0.8,lineCap:'round'}).addTo(map);
@@ -372,7 +371,10 @@ routes.forEach(route=>{
   if(!isReturn){
     const labelParts=route.segments.map(s=>`${s.icon} <span class="rl-time">${s.time}</span>`).join(' + ');
     const labelHtml=`<div class="route-label">${labelParts}</div>`;
-    L.marker(midPoint,{icon:L.divIcon({className:'',html:labelHtml,iconAnchor:[40,10]}),interactive:false}).addTo(map);
+    // Offset label position to avoid overlaps in dense areas
+    const labelOff = route.labelOffset || [0,0];
+    const adjPoint = [midPoint[0]+labelOff[0], midPoint[1]+labelOff[1]];
+    L.marker(adjPoint,{icon:L.divIcon({className:'',html:labelHtml,iconAnchor:[40,10]}),interactive:false}).addTo(map);
   }
 });
 
