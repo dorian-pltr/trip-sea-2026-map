@@ -113,15 +113,7 @@
   .sidebar-toggle:hover { background: rgba(30,30,60,0.95); }
   .sidebar.open ~ .sidebar-toggle { opacity: 0; pointer-events: none; }
 
-  .route-label {
-    padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600;
-    white-space: nowrap; color: rgba(255,255,255,0.75);
-    background: rgba(10,10,30,0.9); border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5); pointer-events: none;
-    display: inline-flex; align-items: center; gap: 4px;
-    width: max-content;
-  }
-  .route-label .rl-time { color: #fff; font-weight: 800; }
+  /* TextPath handles route labels now — text follows the polyline */
 
   .marker-pin {
     width: 30px; height: 30px; border-radius: 50%; display: flex;
@@ -204,6 +196,7 @@
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-textpath@1.2.3/leaflet.textpath.js"></script>
 <script>
 // Stops: excursion = round-trip from base city, baseIdx = which stop they return to
 const stops = [
@@ -349,7 +342,7 @@ function bezierCurve(from,to,n=40){
   return pts;
 }
 
-// Draw routes
+// Draw routes with TextPath labels
 routes.forEach(route=>{
   const fromS=stops[route.from],toS=stops[route.to];
   const from=[fromS.lat,fromS.lng],to=[toS.lat,toS.lng];
@@ -357,29 +350,29 @@ routes.forEach(route=>{
   const colorL=colorsLight[toS.country]||colorsLight[fromS.country];
   const isReturn=route.excursionReturn;
 
-  let midPoint;
+  // Build text label
+  const labelText = route.segments.map(s=>`${s.icon} ${s.time}`).join(' + ');
+
   if(route.flight){
     const curve=bezierCurve(from,to);
+    // Glow
     L.polyline(curve,{color:colorL,weight:8,opacity:0.1,lineCap:'round'}).addTo(map);
-    L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
-    midPoint=curve[Math.floor(curve.length/2)];
+    // Dashed line
+    const flightLine=L.polyline(curve,{color:'rgba(255,255,255,0.55)',weight:2.5,dashArray:'8 6',opacity:0.65,lineCap:'round'}).addTo(map);
+    if(!isReturn){
+      flightLine.setText(labelText,{repeat:false,offset:14,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
+    }
   } else if(isReturn){
-    // Return routes: no line drawn (same road, already shown)
-    midPoint=[(from[0]+to[0])/2,(from[1]+to[1])/2];
+    // Return routes: no line drawn
   } else {
+    // Glow
     L.polyline([from,to],{color:colorL,weight:6,opacity:0.12,lineCap:'round'}).addTo(map);
-    L.polyline([from,to],{color:color,weight:3,opacity:0.8,lineCap:'round'}).addTo(map);
-    midPoint=[(from[0]+to[0])/2,(from[1]+to[1])/2];
-  }
-
-  // Route label on the line (skip return routes to avoid clutter)
-  if(!isReturn){
-    const labelParts=route.segments.map(s=>`${s.icon} <span class="rl-time">${s.time}</span>`).join(' + ');
-    const labelHtml=`<div class="route-label">${labelParts}</div>`;
-    // Offset label position to avoid overlaps in dense areas
-    const labelOff = route.labelOffset || [0,0];
-    const adjPoint = [midPoint[0]+labelOff[0], midPoint[1]+labelOff[1]];
-    L.marker(adjPoint,{icon:L.divIcon({className:'',html:labelHtml,iconSize:[null,null],iconAnchor:[0,12]}),interactive:false}).addTo(map);
+    // Main line with text
+    const mainLine=L.polyline([from,to],{color:color,weight:3,opacity:0.8,lineCap:'round'}).addTo(map);
+    // Ensure text reads left-to-right: flip points if needed
+    const needFlip = from[1] > to[1]; // if going right-to-left
+    const textLine = needFlip ? L.polyline([to,from],{opacity:0}).addTo(map) : mainLine;
+    textLine.setText(labelText,{repeat:false,offset:12,attributes:{fill:'#fff','font-size':'11','font-weight':'700','font-family':'Inter, system-ui, sans-serif','paint-order':'stroke','stroke':'rgba(10,10,30,0.85)','stroke-width':'4','stroke-linecap':'round','stroke-linejoin':'round'}});
   }
 });
 
