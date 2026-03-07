@@ -212,25 +212,25 @@
 <script>
 // Stops: excursion = round-trip from base city, baseIdx = which stop they return to
 const stops = [
-  { id:0, name:"Hanoi", emoji:"🏙️", lat:21.0285, lng:105.8542, country:"vietnam", flag:"🇻🇳", days:"D1–D4", dates:"Oct 15–18", dur:"4 days", dnum:4, note:"Base for 8 days (D1–D9). Hotel holds luggage.", highlights:"Old Quarter, Hoa Lo Prison, Street Food Tour, Long Bien Bridge", food:"Pho Thin, Bun Cha, Egg Coffee, Cha Ca" },
+  { id:0, name:"Hanoi", emoji:"🏙️", lat:21.0285, lng:105.8542, country:"vietnam", flag:"🇻🇳", days:"D1–D9", dates:"Oct 15–23", dur:"8 nights (base)", dnum:8, note:"Base for 8 nights. Hotel holds luggage during Halong Bay (2N cruise) + Ninh Binh (1N).", highlights:"Old Quarter, Hoa Lo Prison, Street Food Tour, Long Bien Bridge", food:"Pho Thin, Bun Cha, Egg Coffee, Cha Ca" },
   { id:1, name:"Ha Long Bay", emoji:"🌊", lat:20.91, lng:107.18, country:"vietnam", flag:"🇻🇳", days:"D5–D6", dates:"Oct 19–20", dur:"2 days", dnum:2, excursion:true, baseIdx:0, note:"Round trip from Hanoi. Lan Ha Bay cruise.", highlights:"2D/1N cruise, kayaking, Dark & Light Cave" },
   { id:2, name:"Ninh Binh", emoji:"🏞️", lat:20.25, lng:105.97, country:"vietnam", flag:"🇻🇳", days:"D7–D8", dates:"Oct 21–22", dur:"2 days", dnum:2, excursion:true, baseIdx:0, note:"Round trip from Hanoi. 1 night in Tam Coc.", highlights:"Trang An UNESCO boat ride, Mua Cave, rice paddies by bike" },
   { id:3, name:"Da Nang", emoji:"✈️", lat:16.054, lng:108.202, country:"vietnam", flag:"🇻🇳", days:"D9,D16", dates:"Oct 23, Oct 30", dur:"transit", dnum:0, transit:true, note:"Transit hub — night train arrival, flight to Saigon.", highlights:"Marble Mountains (en route)" },
   { id:4, name:"Hoi An", emoji:"🏮", lat:15.88, lng:108.34, country:"vietnam", flag:"🇻🇳", days:"D10–D13", dates:"Oct 24–27", dur:"4 days", dnum:4, note:"⚠️ Typhoon risk in October — check weather D-7.", highlights:"Ancient Town, Tra Que cooking class, lantern boats, tailors, basket boats", food:"Cao Lau, Banh Mi Phuong, Mi Quang, White Rose" },
-  { id:5, name:"Hue", emoji:"🏯", lat:16.4637, lng:107.5909, country:"vietnam", flag:"🇻🇳", days:"D14–D15", dates:"Oct 28–29", dur:"2 days", dnum:2, highlights:"Imperial City, Khai Dinh Tomb, Dong Ba Market, Thien Mu Pagoda", food:"Bun Bo Hue, Banh Khoai, Banh Beo, Bun Rieu" },
+  { id:5, name:"Hue", emoji:"🏯", lat:16.4637, lng:107.5909, country:"vietnam", flag:"🇻🇳", days:"D14", dates:"Oct 28", dur:"day trip", dnum:1, excursion:true, baseIdx:4, note:"Day trip from Hoi An via Hai Van Pass minivan. No overnight.", highlights:"Imperial City, Khai Dinh Tomb, Dong Ba Market, Thien Mu Pagoda", food:"Bun Bo Hue, Banh Khoai, Banh Beo" },
   { id:6, name:"Da Lat 🌀", emoji:"⛰️", lat:11.9404, lng:108.4583, country:"vietnam", flag:"🇻🇳", days:"D9–D14", dates:"Oct 23–28", dur:"4 days + transit", dnum:4, planb:true, note:"🌀 PLAN B TYPHOON — replaces Hoi An + Hue if typhoon hits central coast.", highlights:"Canyoning, coffee plantations, night market, Crazy House, waterfalls", food:"Banh Trang Nuong, Nem Nuong, Avocado Ice Cream, Weasel Coffee" },
-  { id:7, name:"Ho Chi Minh City", emoji:"🌆", lat:10.82, lng:106.63, country:"vietnam", flag:"🇻🇳", days:"D16–D20", dates:"Oct 30 – Nov 3", dur:"5 days", dnum:5, highlights:"Cu Chi Tunnels, War Remnants Museum, District 4 food, A O Show", food:"Banh Mi Huynh Hoa, Com Tam, Bo Ne, Pho Hoa" },
+  { id:7, name:"Ho Chi Minh City", emoji:"🌆", lat:10.82, lng:106.63, country:"vietnam", flag:"🇻🇳", days:"D16–D22", dates:"Oct 30 – Nov 5", dur:"5 nights (base)", dnum:5, note:"Base for Can Tho excursion (1N). Luggage stays at hotel.", highlights:"Cu Chi Tunnels, War Remnants Museum, District 4 food, A O Show", food:"Banh Mi Huynh Hoa, Com Tam, Bo Ne, Pho Hoa" },
   { id:8, name:"Can Tho", emoji:"🚣", lat:10.05, lng:105.75, country:"vietnam", flag:"🇻🇳", days:"D21–D22", dates:"Nov 4–5", dur:"2 days", dnum:2, excursion:true, baseIdx:7, note:"Round trip from HCMC.", highlights:"Cai Rang & Phong Dien floating markets, homestay" },
   { id:9, name:"Bangkok", emoji:"🏙️", lat:13.76, lng:100.50, country:"thailand", flag:"🇹🇭", days:"D23–D26", dates:"Nov 6–9", dur:"4 days", dnum:4, highlights:"Grand Palace, Chinatown, Chatuchak, Muay Thai", food:"Pad Thai, Som Tam, Mango Sticky Rice" },
   { id:10, name:"Chiang Mai", emoji:"⛰️", lat:18.79, lng:98.99, country:"thailand", flag:"🇹🇭", days:"D28–D33", dates:"Nov 11–16", dur:"6 days", dnum:6, highlights:"Elephant Nature Park, temples, cooking class, markets" },
   { id:11, name:"Krabi", emoji:"✈️", lat:8.0986, lng:98.9862, country:"thailand", flag:"🇹🇭", days:"D34", dates:"Nov 17", dur:"transit", dnum:0, transit:true, note:"Transit — airport for Koh Lanta." },
   { id:12, name:"Koh Lanta", emoji:"🏖️", lat:7.65, lng:99.04, country:"thailand", flag:"🇹🇭", days:"D35–D40", dates:"Nov 18–23", dur:"6 days", dnum:6, highlights:"Beaches, Old Town, snorkeling, pure relaxation" },
   { id:13, name:"Langkawi", emoji:"🏝️", lat:6.35, lng:99.80, country:"malaysia", flag:"🇲🇾", days:"D43–D46", dates:"Nov 26–29", dur:"4 days", dnum:4, highlights:"Sky Bridge, beaches, mangroves, duty-free" },
-  { id:14, name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D50", dates:"Nov 30 – Dec 3", dur:"4 days", dnum:4, highlights:"George Town street art, temples, food capital", food:"Char Kway Teow, Laksa, Cendol" },
-  { id:15, name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D51–D52", dates:"Dec 4–5", dur:"2 days", dnum:2, highlights:"Tea plantations, Mossy Forest, strawberry farms" },
-  { id:16, name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D53–D56", dates:"Dec 6–9", dur:"4 days", dnum:4, highlights:"Petronas, Batu Caves, Jalan Alor food street", food:"Nasi Lemak, Roti Canai, Satay" },
-  { id:17, name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D57–D58", dates:"Dec 10–11", dur:"2 days", dnum:2, excursion:true, baseIdx:16, note:"Round trip from KL. 1 night.", highlights:"Jonker Street, colonial history, river cruise" },
-  { id:18, name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D59–D62", dates:"Dec 12–15", dur:"4 days", dnum:4, highlights:"Rest, shopping, farewell meals" },
+  { id:14, name:"Penang", emoji:"🎨", lat:5.42, lng:100.33, country:"malaysia", flag:"🇲🇾", days:"D47–D51", dates:"Nov 30 – Dec 4", dur:"5 days", dnum:5, highlights:"George Town street art, temples, food capital", food:"Char Kway Teow, Laksa, Cendol" },
+  { id:15, name:"Cameron Highlands", emoji:"🌿", lat:4.47, lng:101.38, country:"malaysia", flag:"🇲🇾", days:"D52–D54", dates:"Dec 5–7", dur:"3 days", dnum:3, highlights:"Tea plantations, Mossy Forest, strawberry farms, hiking" },
+  { id:16, name:"Kuala Lumpur", emoji:"🏙️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D55–D62", dates:"Dec 8–15", dur:"8 days (base)", dnum:5, note:"Base for Melaka excursion (1N). Luggage stays at hotel.", highlights:"Petronas, Batu Caves, Jalan Alor food street", food:"Nasi Lemak, Roti Canai, Satay" },
+  { id:17, name:"Melaka", emoji:"🏛️", lat:2.19, lng:102.25, country:"malaysia", flag:"🇲🇾", days:"D56–D57", dates:"Dec 9–10", dur:"2 days", dnum:2, excursion:true, baseIdx:16, note:"Round trip from KL. 1 night. Jonker Walk Night Market Fri/Sat.", highlights:"Jonker Street, colonial history, river cruise" },
+  { id:18, name:"KL — Departure", emoji:"✈️", lat:3.14, lng:101.69, country:"malaysia", flag:"🇲🇾", days:"D62", dates:"Dec 15", dur:"departure", dnum:0, highlights:"MH20 KUL→CDG 23:45. Seats 21A+21B." },
 ];
 
 // Routes: actual transport between stops (reflecting real flow)
@@ -248,10 +248,12 @@ const routes = [
   { from:0, to:3, segments:[{ icon:"🚂", mode:"Night train S20", time:"14–16h", cost:"~25€/pp" }], flight:false },
   // Da Nang → Hoi An (Grab transfer)
   { from:3, to:4, segments:[{ icon:"🚗", mode:"Grab", time:"30min", cost:"~5€" }], flight:false },
-  // Hoi An → Huế (minivan via Hai Van Pass)
-  { from:4, to:5, segments:[{ icon:"🚐", mode:"Hai Van Pass", time:"3–4h", cost:"6–8€/pp" }], flight:false },
-  // Huế → Da Nang (train back to airport)
-  { from:5, to:3, segments:[{ icon:"🚂", mode:"Train", time:"2h30", cost:"~10€/pp" }], flight:false },
+  // Hoi An → Huế (excursion out — day trip via Hai Van Pass)
+  { from:4, to:5, segments:[{ icon:"🚐", mode:"Hai Van Pass minivan", time:"3–4h", cost:"6–8€/pp" }], flight:false, excursionOut:true },
+  // Huế → Hoi An (excursion return)
+  { from:5, to:4, segments:[{ icon:"🚐", mode:"Return minivan", time:"3–4h", cost:"6–8€/pp" }], flight:false, excursionReturn:true, label:"Return to Hoi An" },
+  // Hoi An → Da Nang (Grab to airport for flight)
+  { from:4, to:3, segments:[{ icon:"🚗", mode:"Grab to airport", time:"30min", cost:"~5€" }], flight:false },
   // Da Nang → HCMC (flight)
   { from:3, to:7, segments:[{ icon:"✈️", mode:"Flight DAD→SGN", time:"2h", cost:"50€/pp" }], flight:true },
   // --- PLAN B TYPHON: Hanoi → Da Lat → Saigon ---
